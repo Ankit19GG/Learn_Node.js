@@ -1,0 +1,15 @@
+api : platform independence
+
+Get \user -> html doc render
+Get \api\users -> list of all users
+
+Get \api\users\1 -> Get user data with ID 1
+
+Dynamic path parameters : 
+Get /api/users/:id
+
+:id -> variable
+
+Post /api/users -> create user
+
+Patch /api/users/:id -> Edit the user with id 1
