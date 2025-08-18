@@ -14,7 +14,10 @@ const urlSchema=new mongoose.Schema({
         {
             timestamp:{type:Number}
         }
-    ]
+    ],
+    visitCount:{
+        type:Number,
+    }
 },
 {timestamps:true}
 );

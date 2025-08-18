@@ -1,5 +1,5 @@
 const { nanoid } = require('nanoid');
-const URL = require('../Models/URL'); // <-- Make sure this line matches the actual file casing
+const URL = require('../models/url'); // <-- Make sure this line matches the actual file casing
 //=> "rxrsMW"
 
 async function generateShortUrl(req,res) {
@@ -15,4 +15,15 @@ async function generateShortUrl(req,res) {
     return res.json({id:shortId});
 }
 
-module.exports={generateShortUrl,};
+async function deleteUrl(req,res) {
+    const shortId=req.params.shortId;
+    await URL.findOneAndDelete({shortId});
+    if(URL.findOne({shortId})){
+        return res.json({'status':"success"})
+    }
+    else {
+        return res.json('No record found')
+    };
+}
+
+module.exports={generateShortUrl,deleteUrl};

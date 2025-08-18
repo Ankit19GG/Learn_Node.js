@@ -6,6 +6,7 @@ const {connectToMongoDb}=require('./connections');
 
 app.use(express.json());
 
+
 connectToMongoDb("mongodb://127.0.0.1:27017/short-url")
 .then(()=>console.log('Mongodb Connected'))
 
