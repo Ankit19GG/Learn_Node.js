@@ -15,6 +15,23 @@ async function generateShortUrl(req,res) {
     return res.json({id:shortId});
 }
 
+async function Redirect(req,res) {
+    const shortId = req.params.shortId;
+    const entry = await URL.findOneAndUpdate(
+        { shortId },
+        {
+            $push: { visitHistory: { timestamp: Date.now() } }
+        },
+        { new: true }
+    );
+    if (!entry) return res.status(404).json({ error: "Not found" });
+
+    entry.visitCount = entry.visitHistory.length;
+    await entry.save();
+
+    return res.redirect(entry.ogUrl);
+}
+
 async function deleteUrl(req,res) {
     const shortId=req.params.shortId;
     await URL.findOneAndDelete({shortId});
@@ -26,4 +43,12 @@ async function deleteUrl(req,res) {
     };
 }
 
-module.exports={generateShortUrl,deleteUrl};
+async function showAnalytics(req,res) {
+    const shortId=req.params.shortId;
+    entry= await URL.findOne({shortId});
+    if (!entry) return res.status(404).Send(" Entry Not found" );
+    return res.json({visitHistory: entry.visitHistory,
+        visitCount: entry.visitCount});
+}
+
+module.exports={generateShortUrl,deleteUrl,Redirect,showAnalytics};
