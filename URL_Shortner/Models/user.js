@@ -14,6 +14,9 @@ const userSchema=new mongoose.Schema({
         type:String,
         required:true
     },
+    loginHistory:[
+        {timestamp:{type:Number}}
+    ]
 },{timestamps:true});
 
 
