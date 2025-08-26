@@ -9,8 +9,18 @@ async function userSignup(req,res) {
         email,
         password,
         loginHistory:[],
-    })
-    res.render("home")
+    });
+    return res.redirect("/");
 }
 
-module.exports= {userSignup};
+async function userLogin(req,res) {
+    const {email,password}=req.body;
+    const user = await User.findOne({email,password});
+    if(!user)
+        return res.render("login",{
+           error:"Invalid Username or Password",
+    })
+    return res.redirect("/");
+};
+
+module.exports= {userSignup,userLogin};
