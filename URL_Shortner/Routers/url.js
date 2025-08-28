@@ -4,10 +4,10 @@ const { model } = require("mongoose");
 const URL = require("../models/url");
 const router=express.Router();
 
-router.route('/url').post(generateShortUrl);
+router.route('/').post(generateShortUrl);
 router.route('/:shortId').delete(deleteUrl)
 .get(Redirect);
 
 router.get('/url/analytics/:shortId',showAnalytics);
 
-module.exports = router;    
+module.exports = router;

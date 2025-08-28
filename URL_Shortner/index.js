@@ -4,6 +4,8 @@ const app = express();
 const PORT = 8010;
 const {connectToMongoDb}=require('./connections');
 const URL=require('./models/url');
+const cookieParser=require('cookie-parser');
+const {restrictToLoggedinUser}=require('./middlewares/auth');
 
 const urlRoute=require('./Routers/url');
 const staticRouter=require('./Routers/staticrouters');
@@ -12,6 +14,8 @@ const userRoute=require('./Routers/user');
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
+app.use(cookieParser());
+
 
 
 
@@ -25,7 +29,7 @@ connectToMongoDb("mongodb://127.0.0.1:27017/short-url")
 
 
 
-app.use("/url",urlRoute);
+app.use("/url",restrictToLoggedinUser,urlRoute);
 app.use("/",staticRouter);
 app.use("/users",userRoute)
 

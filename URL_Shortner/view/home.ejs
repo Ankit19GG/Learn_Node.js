@@ -25,14 +25,16 @@
                 <th>Original Url</th>
                 <th>Clicks</th>
                 <tbody>
-                    <% locals.urls.forEach((url,i) => {%>
-                        <tr>
-                        <td><%= i+1 %></td>
-                        <td><%= url.shortId %></td>
-                        <td><%= url.ogUrl %></td>
-                        <td><%= url.visitCount %></td>
-                        </tr>
-                    <%}); %>
+                    <% if (urls && urls.length) { %>
+                        <% urls.forEach((url, i) => { %>
+                            <tr>
+                            <td><%= i+1 %></td>
+                            <td><%= url.shortId %></td>
+                            <td><%= url.ogUrl %></td>
+                            <td><%= url.visitCount %></td>
+                            </tr>
+                        <% }) %>
+                    <% } %>
                 </tbody>
             </thead>
         </table>

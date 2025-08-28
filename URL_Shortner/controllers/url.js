@@ -4,18 +4,19 @@ const URL = require('../models/url'); // <-- Make sure this line matches the act
 
 async function generateShortUrl(req,res) {
     const body=req.body;
-    if(!body.url) return res.status(400).json({error:"url is required"});
+    if(!body.url) return res.status(400).send("URL required");
     const shortId=nanoid(6);
     await URL.create({
         shortId:shortId,
         ogUrl:body.url,
         visitHistory:[],
-    })
+    });
 
+    const allUrls = await URL.find({});
     return res.render('home',{
         id:shortId,
+        urls: allUrls, // <-- always pass urls
     })
-    return res.json({id:shortId});
 }
 
 async function Redirect(req,res) {
