@@ -10,9 +10,10 @@ async function generateShortUrl(req,res) {
         shortId:shortId,
         ogUrl:body.url,
         visitHistory:[],
+        createdBy:req.user._id,
     });
-
-    const allUrls = await URL.find({});
+    const createdBy=req.user._id
+    const allUrls = await URL.find({createdBy});
     return res.render('home',{
         id:shortId,
         urls: allUrls, // <-- always pass urls
